@@ -1,0 +1,3 @@
+# HotelManager
+Phần làm bài của Đỗ Xuân Thanh - 19120368
+Tập trung vào các tác vụ đến phòng: Thêm phòng, sửa phòng, xoá phòng, các thông tin loại phòng, giá phòng, phiếu thanh toán,...
