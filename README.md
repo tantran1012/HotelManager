@@ -1,3 +1,4 @@
+
 # HotelManager
 
 Phần mềm quản lý khách sạn đơn giản được viết bằng Nodejs và MongoDB
