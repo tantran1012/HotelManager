@@ -6,7 +6,7 @@ const homeRouter = require('../components/home/home.router');
 function route(app) {
 	// Thêm route vào đây
     app.use('/customers', customerRouter);
-	app.use('/room', roomRouter);
+	app.use('/rooms', roomRouter);
 	app.use('/', homeRouter);
 	//
 
