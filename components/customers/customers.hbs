@@ -32,9 +32,18 @@
                                     <td>{{this.DiaChi}}</td>
                                     <td>{{this.CMND}}</td>
                                     <td>
-                                        <a href="/customers/{{this.ID}}/edit" class="btn btn-link">Sửa</a>
+                                        <a href="#" class="btn btn-link" data-toggle="modal" data-target="#editCustomer"
+                                            data-id="{{this.ID}}" data-hoten="{{this.HoTen}}"
+                                            data-loaikhach="{{this.LoaiKhach}}" data-diachi="{{this.DiaChi}}"
+                                            data-cmnd="{{this.CMND}}">Sửa</a>
                                         <a href="#" class="btn btn-link" data-toggle="modal"
                                             data-target="#deleteCustomer" data-id="{{this.ID}}">Xóa</a>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="6" class="center">
+                                        Chưa có khách hàng nào, hãy bấm thêm khách hàng
                                     </td>
                                 </tr>
                                 {{/each}}
@@ -118,6 +127,64 @@
     </div>
     <!-- /.add Customer Modal -->
 
+    <!-- Edit Customer Modal -->
+    <div class="modal fade" id="editCustomer" tabindex="-1" role="dialog" aria-labelledby="editCustomerLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCustomerLabel">Chỉnh sửa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="/customers/save">
+                    <div class="modal-body">
+                        <label>Họ và tên</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Họ và tên" id="editHoTen" name="editHoTen">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Loại khách</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-plane"></i></span>
+                                <select class="form-control" id="editLoaiKhach" name="editLoaiKhach">
+                                    <option value="1">nội địa</option>
+                                    <option value="2">nước ngoài</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label>Địa chỉ</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Địa chỉ" id="editDiaChi" name="editDiaChi">
+                        </div>
+
+                        <label>CMND/CCCD</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="CMND/CCCD" id="editCMND" name="editCMND">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-success" id="editCustomerButton">Sửa</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /.edit Customer Modal -->
+
     <!-- Delete Form -->
     <form method="POST" name="deleteCustomerForm"></form>
     <!-- Delete Customer Modal -->
@@ -154,6 +221,9 @@
             "responsive": true,
         });
     });
+    var customerID;
+    var btnDeleteCustomer = document.getElementById('deleteCustomerButton');
+    var deleteForm = document.forms['deleteCustomerForm'];
 
     $('#addCustomerButton').click(function (event) {
         event.preventDefault();
@@ -177,16 +247,50 @@
         });
     });
 
-    var customerID;
-    var btnDeleteCustomer = document.getElementById('deleteCustomerButton');
-    var deleteForm = document.forms['deleteCustomerForm'];
+    $('#editCustomer').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        customerID = button.data('id');
+        var editCustomerHoTen = button.data('hoten');
+        var editCustomerLoaiKhach = button.data('loaikhach');
+        var editCustomerDiaChi = button.data('diachi');
+        var editCustomerCMND = button.data('cmnd');
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        modal.find('.modal-body #editHoTen').val(editCustomerHoTen);
+        modal.find('.modal-body #editLoaiKhach').val(editCustomerLoaiKhach);
+        modal.find('input[id="editDiaChi"]').val(editCustomerDiaChi);
+        modal.find('input[id="editCMND"]').val(editCustomerCMND);
+    })
+
+    $('#editCustomerButton').click(function (event) {
+        event.preventDefault();
+        $.ajax({
+            global: false,
+            type: 'POST',
+            url: '/customers/' + customerID + '?_method=PUT',
+            dataType: 'html',
+            data: {
+                HoTen: $("#editHoTen").val(),
+                LoaiKhach: $("#editLoaiKhach").val(),
+                DiaChi: $("#editDiaChi").val(),
+                CMND: $("#editCMND").val(),
+            },
+            success: function (result) {
+                location.reload();
+            },
+            error: function (request, status, error) {
+                console.log(error);
+            }
+        });
+    });
 
     $('#deleteCustomer').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         customerID = button.data('id');
     });
 
-    btnDeleteCustomer.onclick = function (){
+    btnDeleteCustomer.onclick = function () {
         deleteForm.action = '/customers/' + customerID + '?_method=DELETE';
         deleteForm.submit();
     }
