@@ -1,5 +1,4 @@
 const khachHang = require("./customers.model");
-const Handlebars = require("handlebars");
 
 class CustomerController {
   index(req, res, next) {
