@@ -6,7 +6,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Danh sách các phòng hiện có tại khách sạn</h3>
+                <h3 class="card-title">Danh sách các hoá đơn</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -14,37 +14,38 @@
                   <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Loại phòng</th>
-                    <th>Tình trạng</th>
-                    <th>Đơn giá</th>
-                    <th>Chi tiết</th>
+                    <th>Tên Khách Hàng</th>
+                    <th>Địa chỉ</th>
+                    <th>Tổng tiền</th>
+                    <th>Danh Sách Phòng Thuê</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {{#each rooms}}
+                  {{#each bills}}
                   <tr>
                       <td>{{this.ID}}</td>
-                      <td>{{this.LoaiPhong}}
+                      <td>{{this.TenKhachHang}}
                       </td>
-                      <td>{{this.TinhTrang}}</td>
-                      <td>NULL</td>
-                      <td>NULL</td>
+                      <td>{{this.DiaChi}}</td>
+                      <td>{{this.TongTien}}</td>
+                      <td>{{this.DanhSachPhongThue}}</td>
                   </tr>
                   {{/each}}
                   </tbody>
                   <tfoot>
                   <tr>
                     <th>ID</th>
-                    <th>Tên phòng</th>
-                    <th>Loại phòng</th>
-                    <th>Đơn giá</th>
-                    <th>Chi tiết</th>
+                    <th>Tên Khách Hàng</th>
+                    <th>Địa chỉ</th>
+                    <th>Tổng tiền</th>
+                    <th>Danh Sách Phòng Thuê</th>
                   </tr>
                   </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
             </div>
+            <!-- /.card -->
           </div>
           <!-- /.col -->
         </div>
@@ -53,7 +54,6 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-
 <script src="js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="/js/DataTables/datatables.min.js"></script>
 </script>

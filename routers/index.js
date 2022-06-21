@@ -1,7 +1,7 @@
 const customerRouter = require('../components/customers/customers.router');
 const roomRouter = require('../components/rooms/rooms.router');
 const homeRouter = require('../components/home/home.router');
-
+const billRouter = require('../components/bills/bills.router');
 
 function route(app) {
 	// Thêm route vào đây
@@ -11,6 +11,7 @@ function route(app) {
 	app.get('/aboutus', function(req, res) {
 		res.render('aboutus/aboutus');
 	});
+	app.use('/bills', billRouter);
 	//
 
 	
