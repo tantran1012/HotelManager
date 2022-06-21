@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-const KhachHang = require('../../models/KhachHang');
-class CustomerController {
-    index (req, res, next) {
-        KhachHang.find({}) 
-            .then(customers => {
-                customers = customers.map(customers => customers.toObject());
-                res.render('customers/customers', {
-                    title: "Khách hàng",
-                    customers: customers,
-                });
-            })
-            .catch(next)
-    };
-=======
 const khachHang = require("./customers.model");
 const Handlebars = require("handlebars");
 
@@ -41,7 +26,6 @@ class CustomerController {
       .then(() => res.redirect("/customers"))
       .catch(next);
   }
->>>>>>> 803c596ac92027aa9a3cfd42de6a972b560ed97d
 
   edit(req, res, next) {
     khachHang

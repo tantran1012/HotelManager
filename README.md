@@ -1,3 +1,10 @@
+
 # HotelManager
-Phần làm bài của Đỗ Xuân Thanh - 19120368
-Tập trung vào các tác vụ đến phòng: Thêm phòng, sửa phòng, xoá phòng, các thông tin loại phòng, giá phòng, phiếu thanh toán,...
+
+Phần mềm quản lý khách sạn đơn giản được viết bằng Nodejs và MongoDB
+
+## Thành viên
+
+- [@tantran1012](https://github.com/tantran1012)
+- [@Lindonut](https://github.com/Lindonut)
+- [@xuanthanhcr222](https://github.com/xuanthanhcr222)
