@@ -14,29 +14,11 @@ class CustomerController {
       .catch(next);
   }
 
-  create(req, res, next) {
-    res.render("customers/customers_edit", {
-      title: "Thêm khách hàng",
-    });
-  }
 
   save(req, res, next) {
     const customer = new khachHang(req.body);
     customer.save()
       .then(() => res.redirect("/customers"))
-      .catch(next);
-  }
-
-  edit(req, res, next) {
-    khachHang
-      .findOne({ ID: req.params.id })
-      .then((customer) => {
-        customer = customer.toObject();
-        res.render("customers/customers_edit", {
-          title: "Chỉnh sửa khách hàng",
-          customer: customer,
-        });
-      })
       .catch(next);
   }
 
