@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-const BaoCao = new Schema({
+const BaoCaoSchema = new Schema({
     ID: { type: Number },
     NgayTao: {type : Date },
     IDNguoiTao: { type: Number },
     LoaiBaoCao: {type : String },
 });
 
-module.exports = mongoose.model('BaoCao', BaoCao, 'BaoCao');
+
+
+BaoCaoSchema.plugin(AutoIncrement, {id: "BaoCao", inc_field: 'ID'});
+module.exports = mongoose.model('BaoCao', BaoCaoSchema, 'BaoCao');

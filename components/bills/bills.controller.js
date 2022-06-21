@@ -12,16 +12,7 @@ class BillController {
             })
             .catch(next)
     };
-    detail (req, res, next) {
-        res.render('bills/billsdetail', {
-            title: "Chi Tiet Hoa Don",
-        });
-    };
-    add (req, res, next) {
-        res.render('bills/billsadd', {
-            title: "Them Hoa Don",
-        });
-    };
+    
 }
 
 module.exports = new BillController;

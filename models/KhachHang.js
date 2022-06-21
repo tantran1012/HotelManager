@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-const KhachHang = new Schema({
+const KhachHangSchema = new Schema({
     ID: { type: Number },
-    HoTen: {type : String },
+    HoTen: {type : String, required: true},
     LoaiKhach: { type: Number },
-    CMND: {type : String },
-    DiaChi: {type : String },
+    CMND: {type : String, required: true },
+    DiaChi: {type : String, required: true },
 });
 
-module.exports = mongoose.model('khachHang', KhachHang, 'KhachHang');
+
+KhachHangSchema.plugin(AutoIncrement, {id: "KhachHang" ,inc_field: 'ID'});
+module.exports = mongoose.model('khachHang', KhachHangSchema, 'KhachHang');
