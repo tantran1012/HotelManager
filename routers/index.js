@@ -8,6 +8,9 @@ function route(app) {
     app.use('/customers', customerRouter);
 	app.use('/rooms', roomRouter);
 	app.use('/', homeRouter);
+	app.get('/aboutus', function(req, res) {
+		res.render('aboutus/aboutus');
+	});
 	//
 
 	
