@@ -119,7 +119,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                        <button type="button" class="btn btn-primary" id="addCustomerButton">Thêm mới</button>
+                        <button type="submit" class="btn btn-primary" id="addCustomerButton">Thêm mới</button>
                     </div>
                 </form>
             </div>
@@ -138,21 +138,21 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="/customers/save">
+                <form method="POST" id="editCustomerForm">
                     <div class="modal-body">
                         <label>Họ và tên</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Họ và tên" id="editHoTen" name="editHoTen">
+                            <input type="text" class="form-control" placeholder="Họ và tên" id="editHoTen" name="HoTen">
                         </div>
 
                         <div class="form-group">
                             <label>Loại khách</label>
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-plane"></i></span>
-                                <select class="form-control" id="editLoaiKhach" name="editLoaiKhach">
+                                <select class="form-control" id="editLoaiKhach" name="LoaiKhach">
                                     <option value="1">nội địa</option>
                                     <option value="2">nước ngoài</option>
                                 </select>
@@ -164,7 +164,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-building"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Địa chỉ" id="editDiaChi" name="editDiaChi">
+                            <input type="text" class="form-control" placeholder="Địa chỉ" id="editDiaChi" name="DiaChi">
                         </div>
 
                         <label>CMND/CCCD</label>
@@ -172,12 +172,12 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="CMND/CCCD" id="editCMND" name="editCMND">
+                            <input type="text" class="form-control" placeholder="CMND/CCCD" id="editCMND" name="CMND">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                        <button type="button" class="btn btn-success" id="editCustomerButton">Sửa</button>
+                        <button type="submit" class="btn btn-success" id="editCustomerButton">Sửa</button>
                     </div>
                 </form>
             </div>
@@ -224,32 +224,13 @@
     var customerID;
     var btnDeleteCustomer = document.getElementById('deleteCustomerButton');
     var deleteForm = document.forms['deleteCustomerForm'];
-
-    $('#addCustomerButton').click(function (event) {
-        event.preventDefault();
-        $.ajax({
-            global: false,
-            type: 'POST',
-            url: '/customers/save',
-            dataType: 'html',
-            data: {
-                HoTen: $("#HoTen").val(),
-                LoaiKhach: $("#LoaiKhach").val(),
-                DiaChi: $("#DiaChi").val(),
-                CMND: $("#CMND").val(),
-            },
-            success: function (result) {
-                location.reload();
-            },
-            error: function (request, status, error) {
-                console.log(error);
-            }
-        });
-    });
+    var editForm = document.forms['editCustomerForm'];
+    
 
     $('#editCustomer').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         customerID = button.data('id');
+        editForm.action = '/customers/' + customerID + '?_method=PUT';
         var editCustomerHoTen = button.data('hoten');
         var editCustomerLoaiKhach = button.data('loaikhach');
         var editCustomerDiaChi = button.data('diachi');
@@ -260,28 +241,6 @@
         modal.find('input[id="editDiaChi"]').val(editCustomerDiaChi);
         modal.find('input[id="editCMND"]').val(editCustomerCMND);
     })
-
-    $('#editCustomerButton').click(function (event) {
-        event.preventDefault();
-        $.ajax({
-            global: false,
-            type: 'POST',
-            url: '/customers/' + customerID + '?_method=PUT',
-            dataType: 'html',
-            data: {
-                HoTen: $("#editHoTen").val(),
-                LoaiKhach: $("#editLoaiKhach").val(),
-                DiaChi: $("#editDiaChi").val(),
-                CMND: $("#editCMND").val(),
-            },
-            success: function (result) {
-                location.reload();
-            },
-            error: function (request, status, error) {
-                console.log(error);
-            }
-        });
-    });
 
     $('#deleteCustomer').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
