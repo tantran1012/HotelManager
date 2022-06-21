@@ -1,13 +1,14 @@
 const customerRouter = require('../components/customers/customers.router');
 const roomRouter = require('../components/rooms/rooms.router');
 const homeRouter = require('../components/home/home.router');
-
+const billRouter = require('../components/bills/bills.router');
 
 function route(app) {
 	// Thêm route vào đây
     app.use('/customers', customerRouter);
 	app.use('/rooms', roomRouter);
 	app.use('/', homeRouter);
+	app.use('/bills', billRouter);
 	//
 
 	

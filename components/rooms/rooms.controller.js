@@ -1,4 +1,4 @@
-const Phong = require('./rooms.service');
+const Phong = require('../../models/Phong');
 
 class RoomController {
     index (req, res, next) {
@@ -11,6 +11,16 @@ class RoomController {
                 });
             })
             .catch(next)
+    };
+    detail (req, res, next) {
+        res.render('rooms/roomsdetail', {
+            title: "Chi Tiet Phong",
+        });
+    };
+    add (req, res, next) {
+        res.render('rooms/roomsadd', {
+            title: "Them Phong",
+        });
     };
 }
 

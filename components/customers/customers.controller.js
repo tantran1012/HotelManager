@@ -1,8 +1,7 @@
-const khachHang = require('./customers.service');
-
+const KhachHang = require('../../models/KhachHang');
 class CustomerController {
     index (req, res, next) {
-        khachHang.find({}) 
+        KhachHang.find({}) 
             .then(customers => {
                 customers = customers.map(customers => customers.toObject());
                 res.render('customers/customers', {
