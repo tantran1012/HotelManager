@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-const QuyDinh = new Schema({
+const QuyDinhSchema = new Schema({
     ID: { type: Number },
     TenQuyDinh: {type : String },
     NoiDungQuyDinh: { type: Number },
 });
-
-module.exports = mongoose.model('QuyDinh', QuyDinh, 'QuyDinh');
+QuyDinhSchema.plugin(AutoIncrement, {id: "QuyDinh", inc_field: 'ID'});
+module.exports = mongoose.model('QuyDinh', QuyDinhSchema, 'QuyDinh');

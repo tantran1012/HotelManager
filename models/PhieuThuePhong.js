@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-const PhieuThuePhong = new Schema({
+const PhieuThuePhongSchema = new Schema({
     ID: { type: Number },
     IDPhong: {type : Number },
     DanhSachKhachHang: { type: Number },
@@ -9,4 +10,5 @@ const PhieuThuePhong = new Schema({
     NgayTraPhong: {type : Date },
 });
 
-module.exports = mongoose.model('PhieuThuePhong', PhieuThuePhong, 'PhieuThuePhong');
+PhieuThuePhongSchema.plugin(AutoIncrement, {id: "PhieuThuePhong", inc_field: 'ID'});
+module.exports = mongoose.model('PhieuThuePhong', PhieuThuePhongSchema, 'PhieuThuePhong');

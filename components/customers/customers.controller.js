@@ -1,4 +1,4 @@
-const khachHang = require("./customers.model");
+const khachHang = require("../../models/KhachHang");
 
 class CustomerController {
   index(req, res, next) {

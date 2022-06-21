@@ -12,16 +12,24 @@ class RoomController {
             })
             .catch(next)
     };
-    detail (req, res, next) {
-        res.render('rooms/roomsdetail', {
-            title: "Chi Tiet Phong",
-        });
-    };
-    add (req, res, next) {
-        res.render('rooms/roomsadd', {
-            title: "Them Phong",
-        });
-    };
+    save(req, res, next) {
+        const room = new Phong(req.body);
+        room.save()
+          .then(() => res.redirect("/rooms"))
+          .catch(next);
+      }
+    
+      update(req, res, next) {
+        Phong.updateOne({ ID: req.params.id }, req.body)
+          .then(() => res.redirect('/rooms'))
+          .catch(next);
+      }
+    
+      delete(req, res, next) {
+        Phong.deleteOne({ ID: req.params.id })
+          .then(() => res.redirect('back'))
+          .catch(next);
+      }
 }
 
-module.exports = new RoomController;
+module.exports = new RoomController();
