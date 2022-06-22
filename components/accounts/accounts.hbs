@@ -1,0 +1,162 @@
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Danh Sách Nhân Viên</h3>
+            <div class="text-right">
+                <a class="btn btn-primary btn-sm" href="/accounts/add">
+                    Thêm Tài Khoản
+                </a>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table id="listUsers" class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th style="width: 20%">
+                            ID
+                        </th>
+                        <th style="width: 10%">
+                            Avatar
+                        </th>
+                        <th style="width: 20%">
+                            Họ Tên
+                        </th>
+                        <th style="width: 15%">
+                            Tài Khoản
+                        </th>
+                        <th style="width: 10%">
+                            Chức Vụ
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each accounts}}
+                    <tr>
+                        <td>
+                            {{this.ID}}
+                        </td>
+                        <td>
+                            <a>
+                                <li class="list-inline-item">
+                                    <img alt="Avatar" class="table-avatar" src="img/users/{{this.Avatar}}">
+                                </li>
+                            </a>
+                        </td>
+                        <td>
+                            {{this.HoTen}}
+                        </td>
+                        <td>
+                            {{this.TaiKhoan}}
+                        </td>
+                        <td>
+                            {{this.ChucVu}}
+                        </td>
+                        <td class="project-actions text-right">
+                            <a class="btn btn-primary btn-sm" href="/accounts/profile/{{TaiKhoan}}">
+                                <i class="fas fa-folder">
+                                </i>
+                                Xem Profile
+                            </a>
+                            <button class="btn btn-danger btn-sm" data-toggle="modal" 
+                            data-target="#lockUser" data-taikhoan="{{this.TaiKhoan}}">
+                                <i class="fas fa-lock"></i>
+                                Khóa
+                            </button>
+                            <button class="btn btn-success btn-sm" data-toggle="modal"
+                                data-target="#unlockUser" data-taikhoan="{{this.TaiKhoan}}">
+                                <i class="fas fa-unlock"></i>
+                                Mở khóa
+                            </button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            {{#if message }}
+            <h6 class="alert alert-danger mt-4">{{message}}</h6>
+            {{/if}}
+            <br>
+            <div class="custom-pagination">
+                <ul class="pagination center justify-content-center">
+                    <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=4">4</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=5">5</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+    <form method="POST" name="lockUserForm"></form>
+    <div id="lockUser" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Khóa Tài Khoản</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn chắc chắn khóa tài khoản này?</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="lockBtn" type="button" class="btn btn-primary">Đồng Ý</button>
+                    <button id="" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method="POST" name="unlockUserForm"></form>
+    <div id="unlockUser" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mở Khóa Tài Khoản</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn chắc chắn muốn mở khóa tài khoản này?</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="unlockBtn" type="button" class="btn btn-primary">Đồng Ý</button>
+                    <button id="" type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+<script>
+    var userTaiKhoan;
+    var btnLock = document.getElementById('lockBtn');
+    var lockForm = document.forms['lockUserForm'];
+    var btnUnlock = document.getElementById('unlockBtn');
+    var unlockForm = document.forms['unlockUserForm'];
+
+    $('#lockUser').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        userTaiKhoan = button.data('taikhoan');
+    });
+    btnLock.onclick = function () {
+        lockForm.action = '/accounts/lock/' + userTaiKhoan;
+        lockForm.submit();
+    }
+
+    $('#unlockUser').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        userTaiKhoan = button.data('taikhoan');
+    });
+    btnUnlock.onclick = function () {
+        unlockForm.action = '/accounts/unlock/' + userTaiKhoan;
+        unlockForm.submit();
+    }
+</script>
