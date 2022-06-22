@@ -1,0 +1,75 @@
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th style="width: 10%">
+                            ID
+                        </th>
+                        <th style="width: 20%">
+                            Avatar
+                        </th>
+                        <th style="width: 15%">
+                            Họ Tên
+                        </th>
+                        <th style="width: 15%">
+                            Tài Khoản
+                        </th>
+                        <th style="width: 15%">
+                            Chức Vụ
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each accounts}}
+                    <tr>
+                        <td>
+                            {{this.ID}}
+                        </td>
+                        <td>
+                            <a>
+                                <li class="list-inline-item">
+                                    <img alt="Avatar" class="table-avatar" src="img/users/{{this.Avatar}}">
+                                </li>
+                            </a>
+                        </td>
+                        <td>
+                            {{this.HoTen}}
+                        </td>
+                        <td>
+                            {{this.TaiKhoan}}
+                        </td>
+                        <td>
+                            {{this.ChucVu}}
+                        </td>
+                        <td class="project-actions text-right">
+                            <a class="btn btn-primary btn-sm" href="/accounts/profile/{{TaiKhoan}}">
+                                <i class="fas fa-folder">
+                                </i>
+                                Xem Profile
+                            </a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <br>
+            <div class="custom-pagination">
+                <ul class="pagination center justify-content-center">
+                    <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=4">4</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=5">5</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->

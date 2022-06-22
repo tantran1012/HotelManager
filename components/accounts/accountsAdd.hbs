@@ -1,0 +1,39 @@
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <form action="/accounts/new" method="POST" id="addForm">
+        <div class="card justify-content-center">
+            <div class="card-body  row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="inputName">Họ Tên</label>
+                        <input type="text" id="HoTen" class="form-control" name="hoten" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail">Tài Khoản</label>
+                        <input type="text" id="TaiKhoan" class="form-control" name="taikhoan" />
+                    </div>
+                    <div class="form-group">
+                        <label for="ChucVu">Chức Vụ</label>
+                        <select id="ChucVu" class="form-control custom-select" name="chucvu">
+                            <option selected disabled>Select one</option>
+                            <option>Admin</option>
+                            <option>Staff</option>
+                        </select>
+                    </div>
+                    {{#if message }}
+                    <h6 class="alert alert-danger mt-4">{{message}}</h6>
+                    {{/if}}
+                    <br>
+                    <div class="form-group text-right">
+                        <input type="submit" class="btn btn-primary" value="Đăng Ký">
+                        <a class="btn btn-secondary" href="/accounts">Hủy</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+</section>
+<!-- /.content -->
