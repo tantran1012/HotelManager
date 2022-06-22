@@ -9,14 +9,17 @@ function route(app) {
 	// Thêm route vào đây
     app.use('/customers', customerRouter);
 	app.use('/rooms', roomRouter);
-	app.use('/', homeRouter);
+	app.use('/dashboard', homeRouter);
+	app.use('/accounts', accountsRouter);
 	app.get('/aboutus', function(req, res) {
 		res.render('aboutus/aboutus');
+	});
 	app.use('/bills', billRouter);
+	app.use('/', authRouter);
 	//
 
 	
-	// error handler
+	// // error handler
 	// app.use(function (err, req, res, next) {
 	// 	// set locals, only providing error in development
 	// 	res.locals.message = err.message;
