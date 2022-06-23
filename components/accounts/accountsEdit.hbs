@@ -1,0 +1,51 @@
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <form action="/accounts/saveChanges" method="POST" id="editProfileForm" enctype="multipart/form-data">
+        <div class="card">
+            <div class="card-body row">
+                {{#profile}}
+                <div class="col-5 text-center d-flex align-items-center justify-content-center">
+                    <div class="">
+                        <img src="/img/users/{{Avatar}}" alt="" />
+                        <br>
+                        <input type="file" class="form-control" name="Avatar">
+                    </div>
+                </div>
+                <div class="col-7">
+                    <div class="form-group">
+                        <label for="inputName">Họ Tên</label>
+                        <input type="text" id="HoTen" class="form-control" name="hoten" value="{{HoTen}}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName">Địa Chỉ</label>
+                        <input type="text" id="DiaChi" class="form-control" name="diachi" value="{{DiaChi}}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName">Ngày Sinh</label>
+                        <input type="date" id="NgaySinh" class="form-control" name="dob" value="{{DOB}}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName">Email</label>
+                        <input type="email" id="Email" class="form-control" name="email" value="{{Email}}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName">Điện Thoại</label>
+                        <input type="text" id="DienThoai" class="form-control" name="phone" value="{{Phone}}" />
+                    </div>
+
+                    <div class="form-group text-right">
+                        <input type="submit" class="btn btn-primary" value="Lưu">
+                        <a class="btn btn-secondary" href="/accounts/myProfile">Hủy</a>
+                    </div>
+                </div>
+                {{/profile}}
+            </div>
+            {{#if message }}
+            <h6 class="alert alert-danger mt-4">{{message}}</h6>
+            {{/if}}
+        </div>
+    </form>
+
+</section>
+<!-- /.content -->

@@ -10,13 +10,14 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
-                            data-target="#addCustomer">Thêm</button>
-                        <button id="openModalEdit" type="button" class="btn btn-primary mb-2" data-toggle="modal"
-                            data-target="#editCustomer" disabled>Sửa</button>
-                        <button id="openModalDelete" type="button" class="btn btn-primary mb-2" data-toggle="modal"
-                            data-target="#deleteCustomer" disabled>Xóa</button>
-
+                        <div class="mb-2" id="buttonPane">
+                            <button id="openModalDelete" type="button" class="btn btn-primary float-right ml-1"
+                                data-toggle="modal" data-target="#deleteCustomer" disabled>Xóa</button>
+                            <button id="openModalEdit" type="button" class="btn btn-primary float-right ml-1"
+                                data-toggle="modal" data-target="#editCustomer" disabled>Sửa</button>
+                            <button type="button" class="btn btn-primary float-right ml-1" data-toggle="modal"
+                                data-target="#addCustomer">Thêm</button>
+                        </div>
                         <table id="listCustomers" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -224,17 +225,17 @@
             "responsive": true,
             dom: 'Bfrtip',
             select: true,
-        });
+        }).buttons().container().appendTo('#buttonPane');
 
         $('#listCustomers tbody').on('click', 'tr', function () {
-        if ($(this).hasClass('selected')) {
-            buttonOpenEdit.disabled = true;
-            buttonOpenDelete.disabled = true;
-        } else {
-            buttonOpenEdit.disabled = false;
-            buttonOpenDelete.disabled = false;
-        }
-    });
+            if ($(this).hasClass('selected')) {
+                buttonOpenEdit.disabled = true;
+                buttonOpenDelete.disabled = true;
+            } else {
+                buttonOpenEdit.disabled = false;
+                buttonOpenDelete.disabled = false;
+            }
+        });
     });
 
     $('#editCustomer').on('show.bs.modal', function (event) {
