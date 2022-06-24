@@ -15,7 +15,7 @@ exports.list =  (pageNumber, nPerPage) => {
 exports.add =  async (req,res) => {
   const HoTen = req.body.hoten;
   const TaiKhoan = req.body.taikhoan;
-  const MatKhau = process.env.DEFAUL_PASSWORD;
+  const MatKhau = process.env.DEFAULT_PASSWORD;
   const ChucVu = req.body.chucvu;
   let isExist = await accounts.findOne({TaiKhoan});
   if (!TaiKhoan || !HoTen || !ChucVu || !MatKhau)
