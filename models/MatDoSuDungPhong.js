@@ -7,7 +7,7 @@ const MatDoSuDungPhongSchema = new Schema({
     IDBaoCao: {type : Number },
     IDPhong: { type: Number },
     SoNgayThue: {type : Number },
-    TyLe: {type : Float32Array },
+    TyLe: {type : Number },
 });
 
 MatDoSuDungPhongSchema.plugin(AutoIncrement, {id:"MatDoSuDungPhong", inc_field: 'ID'});

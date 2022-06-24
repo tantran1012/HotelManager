@@ -1,0 +1,142 @@
+<link rel="stylesheet" type="text/css" href="/js/DataTables/datatables.min.css" />
+<!-- Main content -->
+<section class="content" id="contentPage">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách khách hàng</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="mb-2" id="buttonPane">
+                            <button id="openModalDelete" type="button" class="btn btn-primary float-right ml-1"
+                                data-toggle="modal" data-target="#deleteStatistic" disabled>Xóa</button>
+                            <button type="button" class="btn btn-primary float-right ml-1" data-toggle="modal"
+                                data-target="#addStatistic">Thêm</button>
+                            <a id="viewReport" type="button" class="btn btn-success float-right ml-1 disabled">Xem chi
+                                tiết</a>
+                        </div>
+                        <table id="listStatistics" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Ngày tạo</th>
+                                    <th>ID người tạo</th>
+                                    <th>Loại báo cáo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each statistic}}
+
+                                <tr>
+
+                                    <td>{{this.ID}}</td>
+                                    <td>{{this.NgayTao}}</td>
+                                    <td>{{this.IDNguoiTao}}</td>
+                                    <td>{{this.LoaiBaoCao}}</td>
+                                    </a>
+                                </tr>
+
+                                {{else}}
+                                <tr>
+                                    <td colspan="5" class="center">
+                                        Chưa có báo cáo nào.
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Ngày tạo</th>
+                                    <th>ID người tạo</th>
+                                    <th>Loại báo cáo</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+
+    <!-- Delete Form -->
+    <form method="POST" name="deleteStatisticForm"></form>
+    <!-- Delete Statistic Modal -->
+    <div class="modal fade" id="deleteStatistic" tabindex="-1" role="dialog" aria-labelledby="deleteStatisticLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteStatisticLabel">Xóa báo cáo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bạn có thật sự muốn xóa
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="deleteStatisticButton">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.Delete Statistic Modal -->
+</section>
+
+<script type="text/javascript" src="/js/DataTables/datatables.min.js"></script>
+<script>
+    var delStatisticID;
+    var btnDeleteStatistic = document.getElementById('deleteStatisticButton');
+    var btnViewReport = document.getElementById('viewReport');
+    var deleteForm = document.forms['deleteStatisticForm'];
+    var listStatistics;
+    const buttonOpenDelete = document.querySelector('#openModalDelete');
+
+    $(document).ready(function () {
+        listStatistics = $('#listStatistics').DataTable({
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "buttons": [
+                'copy', 'excel', 'pdf', 'print'
+            ],
+            select: true
+        });
+        listStatistics.buttons().container().appendTo('#buttonPane');
+
+        $('#listStatistics tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                buttonOpenDelete.disabled = true;
+                $('#viewReport').attr('href', '#');
+                $('#viewReport').addClass('disabled');
+            } else {
+                buttonOpenDelete.disabled = false;
+                $('#viewReport').attr('href', '/statistics/' + $(this).get(0).getElementsByClassName('dtr-control').item(0).innerHTML + '/view');
+                $('#viewReport').removeClass('disabled');
+            }
+        });
+    });
+
+    $('#deleteStatistic').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var data = listStatistics.row({ selected: true }).data();
+        delStatisticID = data[0];
+    });
+
+    btnDeleteStatistic.onclick = function () {
+        /*deleteForm.action = '/statistics/' + delStatisticID + '/delete?_method=DELETE';
+        deleteForm.submit();*/
+    }
+</script>
+<!-- /.content -->
