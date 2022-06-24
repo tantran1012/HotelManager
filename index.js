@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 
 let upload = multer({
   storage: storage,
-  limits: { fileSize: 1000000 },
+  limits: { fileSize: 52428800 },
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
@@ -88,7 +88,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.post("/accounts/saveChanges", (req, res) => {
+app.post("/accounts/myprofile", (req, res) => {
   upload(req, res, (err) => {
     //err
     if (err) {

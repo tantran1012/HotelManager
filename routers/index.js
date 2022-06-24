@@ -19,7 +19,6 @@ function route(app) {
 	});
 	app.use('/rentals', rentalRouter);
 	app.use('/bills', billRouter);
-	
 	app.use('/', authRouter);
 	//
 
