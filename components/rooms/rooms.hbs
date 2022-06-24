@@ -269,6 +269,8 @@
 	$('#detailRoom').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget);
 		var data = listRooms.row({ selected: true }).data();
+		var typeRoom = data[1];
+		
 		detailForm.action = '/rooms/?_method=GET';
 		var dongia = undefined;
 		var loaiphong = data[1];
