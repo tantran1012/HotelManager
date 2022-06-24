@@ -5,9 +5,9 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 const PhieuThuePhongSchema = new Schema({
     ID: { type: Number },
     IDPhong: {type : Number },
-    DanhSachKhachHang: { type: Number },
-    NgayBatDauThue: {type : Date },
-    NgayTraPhong: {type : Date },
+    DanhSachKhachHang: { type: String },
+    NgayBatDauThue: {type : String },
+    NgayTraPhong: {type : String },
 });
 
 PhieuThuePhongSchema.plugin(AutoIncrement, {id: "PhieuThuePhong", inc_field: 'ID'});
