@@ -78,6 +78,10 @@ exports.saveChanges = async (req, res) => {
     await accountsService.saveChanges(req,res);
 }
 
+exports.upload = async (req, res) => {
+    await accountsService.upload(req,res);
+}
+
 exports.changePassword = async (req, res) => {
     res.render('accounts/accountsChangePassword', {
         title: "Thay Đổi Mật Khẩu"});

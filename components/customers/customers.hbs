@@ -1,45 +1,268 @@
+<link rel="stylesheet" type="text/css" href="/js/DataTables/datatables.min.css" />
 <!-- Main content -->
-<div class="card card-solid">
-    <div class="card-body pb-0">
+<section class="content" id="contentPage">
+    <div class="container-fluid">
         <div class="row">
-            {{#each customers}}
-            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                <div class="card bg-light d-flex flex-fill">
-                    <div class="card-header text-muted border-bottom-0">
-                        Digital Strategist
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách khách hàng</h3>
                     </div>
-                    <div class="card-body pt-0">
-                        <div class="row">
-                            <div class="col-7">
-                                <h2 class="lead"><b>{{this.HoTen}}</b></h2>
-                                <p class="text-muted text-sm"><b>Loại Khách: </b> {{this.LoaiKhach}}</script> </p>
-                                <ul class="ml-4 mb-0 fa-ul text-muted">
-                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>
-                                        Địa chỉ: {{this.DiaChi}}</li>
-                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-id-card"></i></span>
-                                        CMND/CCCD: {{this.CMND}}</li>
-                                </ul>
-                            </div>
-                            <div class="col-5 text-center">
-                                <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar"
-                                    class="img-circle img-fluid">
-                            </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="mb-2" id="buttonPane">
+                            <button id="openModalDelete" type="button" class="btn btn-primary float-right ml-1"
+                                data-toggle="modal" data-target="#deleteCustomer" disabled>Xóa</button>
+                            <button id="openModalEdit" type="button" class="btn btn-primary float-right ml-1"
+                                data-toggle="modal" data-target="#editCustomer" disabled>Sửa</button>
+                            <button type="button" class="btn btn-primary float-right ml-1" data-toggle="modal"
+                                data-target="#addCustomer">Thêm</button>
                         </div>
+                        <table id="listCustomers" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Họ và tên</th>
+                                    <th>Loại khách</th>
+                                    <th>Địa chỉ</th>
+                                    <th>CMND/CCCD</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each customers}}
+                                <tr>
+                                    <td>{{this.ID}}</td>
+                                    <td>{{this.HoTen}}</td>
+                                    <td>{{#ifEquals this.LoaiKhach 1}}Nội địa{{else}}Nước ngoài{{/ifEquals}}</td>
+                                    <td>{{this.DiaChi}}</td>
+                                    <td>{{this.CMND}}</td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="5" class="center">
+                                        Chưa có khách hàng nào, hãy bấm thêm khách hàng
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Họ và tên</th>
+                                    <th>Loại khách</th>
+                                    <th>Địa chỉ</th>
+                                    <th>CMND/CCCD</th>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
-                    <div class="card-footer">
-                        <div class="text-right">
-                            <a href="#" class="btn btn-sm bg-teal">
-                                <i class="fas fa-comments"></i>
-                            </a>
-                            <a href="#" class="btn btn-sm btn-primary">
-                                <i class="fas fa-user"></i> View Profile
-                            </a>
-                        </div>
-                    </div>
+                    <!-- /.card-body -->
                 </div>
+                <!-- /.card -->
             </div>
-            {{/each}}
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+    <!-- Add Customer Modal -->
+    <div class="modal fade" id="addCustomer" tabindex="-1" role="dialog" aria-labelledby="addCustomerLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCustomerLabel">Thêm khách hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="/customers/save">
+                    <div class="modal-body">
+                        <label>Họ và tên</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Họ và tên" id="HoTen" name="HoTen">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Loại khách</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-plane"></i></span>
+                                <select class="form-control" id="LoaiKhach" name="LoaiKhach">
+                                    <option value="1">Nội địa</option>
+                                    <option value="2">Nước ngoài</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label>Địa chỉ</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Địa chỉ" id="DiaChi" name="DiaChi">
+                        </div>
+
+                        <label>CMND/CCCD</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="CMND/CCCD" id="CMND" name="CMND">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary" id="addCustomerButton">Thêm mới</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+    <!-- /.add Customer Modal -->
+
+    <!-- Edit Customer Modal -->
+    <div class="modal fade" id="editCustomer" tabindex="-1" role="dialog" aria-labelledby="editCustomerLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCustomerLabel">Chỉnh sửa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" id="editCustomerForm">
+                    <div class="modal-body">
+                        <label>Họ và tên</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Họ và tên" id="editHoTen" name="HoTen">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Loại khách</label>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-plane"></i></span>
+                                <select class="form-control" id="editLoaiKhach" name="LoaiKhach">
+                                    <option value="1">Nội địa</option>
+                                    <option value="2">Nước ngoài</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label>Địa chỉ</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-building"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Địa chỉ" id="editDiaChi" name="DiaChi">
+                        </div>
+
+                        <label>CMND/CCCD</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="CMND/CCCD" id="editCMND" name="CMND">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-success" id="editCustomerButton">Sửa</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /.edit Customer Modal -->
+
+    <!-- Delete Form -->
+    <form method="POST" name="deleteCustomerForm"></form>
+    <!-- Delete Customer Modal -->
+    <div class="modal fade" id="deleteCustomer" tabindex="-1" role="dialog" aria-labelledby="deleteCustomerLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCustomerLabel">Xóa khách hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bạn có thật sự muốn xóa
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="deleteCustomerButton">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.Delete Customer Modal -->
+</section>
+
+<script type="text/javascript" src="/js/DataTables/datatables.min.js"></script>
+<script>
+    var delCustomerID;
+    var btnDeleteCustomer = document.getElementById('deleteCustomerButton');
+    var deleteForm = document.forms['deleteCustomerForm'];
+    var editForm = document.forms['editCustomerForm'];
+    var listCustomers;
+    const buttonOpenEdit = document.querySelector('#openModalEdit');
+    const buttonOpenDelete = document.querySelector('#openModalDelete');
+
+    $(document).ready(function () {
+        listCustomers = $('#listCustomers').DataTable({
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            dom: 'Bfrtip',
+            select: true,
+        })
+        listCustomers.buttons().container().appendTo('#buttonPane');
+
+        $('#listCustomers tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                buttonOpenEdit.disabled = true;
+                buttonOpenDelete.disabled = true;
+            } else {
+                buttonOpenEdit.disabled = false;
+                buttonOpenDelete.disabled = false;
+            }
+        });
+    });
+
+    $('#editCustomer').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var data = listCustomers.row({ selected: true }).data();
+        editForm.action = '/customers/' + data[0] + '?_method=PUT';
+        var loaiKhach;
+        if (data[2] == 'Nội địa') {
+            loaiKhach = 1;
+        } else loaiKhach = 2;
+        var modal = $(this);
+        modal.find('.modal-body #editHoTen').val(data[1]);
+        modal.find('.modal-body #editLoaiKhach').val(loaiKhach);
+        modal.find('input[id="editDiaChi"]').val(data[3]);
+        modal.find('input[id="editCMND"]').val(data[4]);
+    })
+
+    $('#deleteCustomer').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var data = listCustomers.row({ selected: true }).data();
+        delCustomerID = data[0];
+    });
+
+    btnDeleteCustomer.onclick = function () {
+        deleteForm.action = '/customers/' + delCustomerID + '?_method=DELETE';
+        deleteForm.submit();
+    }
+</script>
 <!-- /.content -->

@@ -1,14 +1,27 @@
+<link rel="stylesheet" href="/css/adminlte.css">
 <!-- Main content -->
 <section class="content">
     <!-- Default box -->
     <div class="card">
         <div class="card-body row">
             {{#profile}}
+
             <div class="col-5 text-center d-flex align-items-center justify-content-center">
-                <div class="">
-                    <img src="/img/users/{{Avatar}}" alt="" />
-                </div>
+                <form action="/accounts/upload" method="POST" id="editProfileForm" enctype="multipart/form-data">
+                    <div class="card-body box-profile">
+                        <img class="profile-user-img img-fluid" src="/img/users/{{Avatar}}" alt="" />
+                        <br>
+                        <br>
+                        <br>
+                        <input type="file" class="form-control" name="Avatar">
+                        <br>
+                        <div class="justify-content-center">
+                            <input type="submit" class="btn btn-primary" value="Lưu">
+                        </div>
+                    </div>
+                </form>
             </div>
+
             <div class="col-7">
                 <h5><strong>ID</strong></h5>
                 <p class="text-muted">{{ID}}</p>
@@ -34,7 +47,7 @@
             {{/profile}}
         </div>
         {{#if message }}
-        <h6 class="alert alert-danger mt-4">{{message}}</h6>
+        <h6 class="alert alert-info mt-4">{{message}}</h6>
         {{/if}}
     </div>
 

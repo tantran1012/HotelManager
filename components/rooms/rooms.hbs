@@ -1,3 +1,230 @@
-    <!-- Main content -->  
-        <H1>Nội dung room đêy</H1>
-    <!-- /.content -->
+<link rel="stylesheet" type="text/css" href="/js/DataTables/datatables.min.css" />
+<!-- Main content -->
+<section class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">Danh sách các phòng hiện có tại khách sạn</h3>
+
+					</div>
+					<!-- /.card-header -->
+					<div class="card-body">
+						<div class="mb-2" id="buttonPaint">
+							<button id="openModalDelete" type="button" class="btn btn-primary ml-2 mc-5 float-right"
+								data-toggle="modal" data-target="#deleteRoom" disabled>Xóa</button>
+							<button id="openModalEdit" type="button" class="btn btn-primary ml-2 mc-5 float-right"
+								data-toggle="modal" data-target="#editRoom" disabled>Sửa</button>
+							<button type="button" class="btn btn-primary ml-2 mc-5 float-right" data-toggle="modal"
+								data-target="#addRoom">Thêm</button>
+						</div>
+						<table id="listRooms" class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Loại phòng</th>
+									<th>Tình trạng</th>
+								</tr>
+							</thead>
+							<tbody>
+								{{#each rooms}}
+								<tr>
+									<td>{{this.ID}}</td>
+									<td>
+										{{this.LoaiPhong}}
+									</td>
+									<td>
+										{{this.TinhTrang}}
+									</td>
+								</tr>
+								{{/each}}
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>ID</th>
+									<th>Tên phòng</th>
+									<th>Loại phòng</th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<!-- /.card-body -->
+				</div>
+			</div>
+			<!-- /.col -->
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+<!-- Add Room Modal -->
+<div class="modal fade" id="addRoom" tabindex="-1" role="dialog" aria-labelledby="addRoomLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addRoomLabel">Thêm phòng</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form method="POST" action="/rooms/save">
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Loại phòng</label>
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-house-chimney-window"></i></span>
+							<select class="form-control" id="LoaiPhong" name="LoaiPhong">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Tình trạng</label>
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fa-solid fa-hotel"></i></span>
+							<select class="form-control" id="TinhTrang" name="TinhTrang">
+								<option value="Co">Đã có khách</option>
+								<option value="Trong">Trống</option>
+								<option value="Hong">Hỏng</option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+					<button type="submit" class="btn btn-primary" id="addRoomButton">Thêm mới</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- /.add Room Modal -->
+
+<!-- Edit Room Modal -->
+<div class="modal fade" id="editRoom" tabindex="-1" role="dialog" aria-labelledby="editRoomLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="editRoomLabel">Chỉnh sửa</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form id="editRoomForm" method="POST">
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Loại phòng</label>
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-house-chimney-window"></i></span>
+							<select class="form-control" id="editLoaiPhong" name="LoaiPhong">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Tình Trạng</label>
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fa-solid fa-hotel"></i></span>
+							<select class="form-control" id="editTinhTrang" name="TinhTrang">
+								<option value="Co">Đã có khách</option>
+								<option value="Trong">Trống</option>
+								<option value="Hong">Hỏng</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+					<button type="submit" class="btn btn-success" id="editRoomButton">Sửa</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- /.edit Room Modal -->
+
+<!-- Delete Form -->
+<form method="POST" name="deleteRoomForm"></form>
+<!-- Delete Room Modal -->
+<div class="modal fade" id="deleteRoom" tabindex="-1" role="dialog" aria-labelledby="deleteRoomLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="deleteRoomLabel">Xóa phòng</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Bạn có thật sự muốn xóa
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+				<button type="submit" class="btn btn-danger" id="deleteRoomButton">Xóa</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /.Delete Room Modal -->
+<script type="text/javascript" src="/js/DataTables/datatables.min.js"></script>
+</script>
+<script>
+	var delRoomID;
+	var btnDeleteRoom = document.getElementById('deleteRoomButton');
+	var deleteForm = document.forms['deleteRoomForm'];
+	var editForm = document.forms['editRoomForm'];
+	var listRooms;
+	const buttonOpenEdit = document.querySelector('#openModalEdit');
+	const buttonOpenDelete = document.querySelector('#openModalDelete');
+
+	$(document).ready(function () {
+		listRooms = $('#listRooms').DataTable({
+			"ordering": true,
+			"info": true,
+			"autoWidth": false,
+			"responsive": true,
+			dom: 'Bfrtip',
+			select: true,
+		})
+		listRooms.buttons().container().appendTo('#buttonPaint');
+
+		$('#listRooms tbody').on('click', 'tr', function () {
+			if ($(this).hasClass('selected')) {
+				buttonOpenEdit.disabled = true;
+				buttonOpenDelete.disabled = true;
+			} else {
+				buttonOpenEdit.disabled = false;
+				buttonOpenDelete.disabled = false;
+			}
+		});
+	});
+	$('#editRoom').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget);
+		var data = listRooms.row({ selected: true }).data();
+		editForm.action = '/rooms/' + data[0] + '?_method=PUT';
+		var loaiPhong = data[1];
+		var tinhTrang = data[2];
+		var modal = $(this);
+		modal.find('.modal-body #editLoaiPhong').val(loaiPhong);
+		modal.find('.modal-body #editTinhTrang').val(tinhTrang);
+
+	})
+	$('#deleteRoom').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget);
+		var data = listRooms.row({ selected: true }).data();
+		delRoomID = data[0];
+	});
+
+	btnDeleteRoom.onclick = function () {
+		deleteForm.action = '/rooms/' + delRoomID + '?_method=DELETE';
+		deleteForm.submit();
+	}
+</script>
