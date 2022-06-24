@@ -4,7 +4,7 @@
 	<a href="/dashboard" class="brand-link">
 		<img src="/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
 			style="opacity: .8">
-		<span class="brand-text font-weight-light">AdminLTE 3</span>
+		<span class="brand-text font-weight-light">HotelManager</span>
 	</a>
 
 	<!-- Sidebar -->
@@ -15,9 +15,9 @@
 				<img src="/img/users/{{currentUser.Avatar}}" class="img-circle elevation-2" alt="User Image">
 			</div>
 			<div class="info">
-				<h5 class="d-block">{{currentUser.HoTen}}</h5>
+				<a href="/accounts/myprofile" class="d-block">{{currentUser.HoTen}}</a>
 			</div>
-		</div>
+		</div>	
 
 		<!-- SidebarSearch Form -->
 		<div class="form-inline">
@@ -68,7 +68,7 @@
 				</li>
 				<li class="nav-item">
 					<a href="/bills" class="nav-link">
-						<i class="nav-icon fa-solid fa-receipt"></i>
+						<i class="nav-icon fa-solid fa-file-invoice-dollar"></i>
 						<p>
 							Quản Lý Hóa Đơn
 						</p>
@@ -78,32 +78,17 @@
 					<a href="/rentals" class="nav-link">
 						<i class="nav-icon fas fa-file-invoice"></i>
 						<p>
-							Quản Lý Phiếu Thuê Phòng
+							Phiếu Thuê Phòng
 						</p>
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#" class="nav-link">
+					<a href="/statistics" class="nav-link">
 						<i class="nav-icon fas fa-file-contract"></i>
 						<p>
 							Báo Cáo
-							<i class="right fas fa-angle-left"></i>
 						</p>
 					</a>
-					<ul class="nav nav-treeview">
-						<li class="nav-item">
-							<a href="../../index.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Báo Cáo Tháng</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="../../index2.html" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Báo Cáo Hư Hỏng</p>
-							</a>
-						</li>
-					</ul>
 				</li>
 			</ul>
 		</nav>
