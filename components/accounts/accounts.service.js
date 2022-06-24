@@ -99,40 +99,65 @@ exports.changeProfile =  (TaiKhoan) => {
     return accounts.find({TaiKhoan: TaiKhoan}).limit(1).lean();
 };
 
-exports.saveChanges =  async (req,res) => {
+exports.upload =  async (req,res) => {
     await app.upload(req, res, async(err) => {
         if (err) {
-            console.log("Upload Error");
-            res.render("Error", {
-              error: err,
+            console.log(err)
+            res.render("accounts/accountsProfile", {
+                message: "Upload Error!",
             });
-          } else {
+            } else {
             if (req.file == undefined) {
-              console.log("Upload Error: No File To Upload");
-      
-              res.render("error", {
-                error: "Error: No File Selected!",
-              });
-              }
+                res.render("accounts/accountsProfile", {
+                    message: "Error: No File Selected!",
+                });
+                }
                 else {
-                    const HoTen = req.body.hoten;
-                    const DiaChi = req.body.diachi;
-                    const DOB = req.body.dob;
-                    const Email = req.body.email;
-                    const Phone = req.body.phone;
-                    const Avatar = req.body.Avatar;
-                    try{
-                        const filter = { TaiKhoan:req.user.TaiKhoan };
-                        const update = { HoTen: HoTen,DiaChi: DiaChi,DOB: DOB, Email: Email,Phone: Phone,Avatar: Avatar};
-                        await accounts.updateOne(filter, update);
-                        res.render('accounts/accountsProfile',{message: 'Chỉnh Sửa Thành Công!'})     
-                  }catch(err){
-                    res.json({message: err.message})
-                  }    
+                    const Avatar = res.req.file.originalname;;
+                    const filter = { TaiKhoan:req.user.TaiKhoan };
+                    const update = {Avatar:Avatar};
+                    await accounts.updateOne(filter, update);
+                    res.render('accounts/accountsProfile',{message: 'Đổi Avatar Thành Công!'})    
+                }
             }
         }
-    });
-};
+)}
+
+exports.saveChanges =  async (req,res) => {
+    const HoTen = req.body.hoten;
+    const DiaChi = req.body.diachi;
+    const DOB = req.body.dob;
+    const Email = req.body.email;
+    const Phone = req.body.phone;
+    const filter = { TaiKhoan:req.user.TaiKhoan };
+    var update = undefined
+    if(HoTen)
+    {
+        update = { HoTen:HoTen};
+        await accounts.updateOne(filter, update);
+    }
+    if(DiaChi)
+    {
+        update = { DiaChi:DiaChi};
+        await accounts.updateOne(filter, update);
+    }
+    if(DOB)
+    {
+        update = { DOB:DOB};
+        await accounts.updateOne(filter, update);
+    }
+    if(Email)
+    {
+        update = { Email:Email};
+        await accounts.updateOne(filter, update);
+    }
+    if(Phone)
+    {
+        update = {Phone:Phone};
+        await accounts.updateOne(filter, update);
+    }
+    res.render('accounts/accountsProfile',{message: 'Chỉnh Sửa Thành Công!'})     
+}
 
 exports.savePassword =  async (req,res) => {
     const MKHienTai = req.body.mkhientai;

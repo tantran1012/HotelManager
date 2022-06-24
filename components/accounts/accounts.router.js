@@ -21,6 +21,8 @@ router.post('/unlock/:TaiKhoan',accountsController.unlock);
 
 router.get('/changeProfile',accountsController.changeProfile);
 
+router.post('/upload',accountsController.upload);
+
 router.post('/saveChanges',accountsController.saveChanges);
 
 router.get('/changePassword',accountsController.changePassword);
