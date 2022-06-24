@@ -13,7 +13,7 @@
 					<div class="card-body">
 						<div class="mb-2" id="buttonPaint">
 							<button id="openModalDetail" type="button" class="btn btn-primary ml-2 mc-5 float-right"
-								data-toggle="modal" data-target="#detailRoom" href="#" disabled>Chi Tiết</button>
+								data-toggle="modal" data-target="#detailRoom" disabled>Chi Tiết</button>
 							<button id="openModalDelete" type="button" class="btn btn-primary ml-2 mc-5 float-right"
 								data-toggle="modal" data-target="#deleteRoom" disabled>Xóa</button>
 							<button id="openModalEdit" type="button" class="btn btn-primary ml-2 mc-5 float-right"
@@ -32,7 +32,9 @@
 							<tbody>
 								{{#each rooms}}
 								<tr>
-									<td>{{this.ID}}</td>
+									<td>
+										{{this.ID}}
+									</td>
 									<td>
 										{{this.LoaiPhong}}
 									</td>
@@ -190,12 +192,12 @@
 			<form id="detailRoomForm" method="GET">
 				<div class="modal-body">
 					<div class="form-group">
-						<label>Loại phòng</label>
-						<label>Không xác định</label>
+						<label>Loại phòng: </label>
+						<input type="text" id="idloaiphong" disabled>
 					</div>
 					<div class="form-group">
-						<label>Đơn giá</label>
-						<label>Không xác định</label>
+						<label>Đơn giá: </label>
+						<input type="text" id="iddongia" disabled>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -268,5 +270,21 @@
 		var button = $(event.relatedTarget);
 		var data = listRooms.row({ selected: true }).data();
 		detailForm.action = '/rooms/?_method=GET';
+		var dongia = undefined;
+		var loaiphong = data[1];
+		if (loaiphong == 1) {
+            dongia = '150.000';
+        }
+		else if (loaiphong == 2)
+		{
+			dongia = '250.000';
+		} 
+		else if (loaiphong == 3)
+		{
+			dongia = '350.000';
+		}
+		var modal = $(this);
+		modal.find('.modal-body #idloaiphong').val(loaiphong);
+		modal.find('.modal-body #iddongia').val(dongia);
 	});
 </script>
