@@ -213,7 +213,9 @@
 			"info": true,
 			"autoWidth": false,
 			"responsive": true,
-			dom: 'Bfrtip',
+			"buttons": [
+                'copy', 'excel', 'pdf', 'print'
+            ],
 			select: true,
 		});
 		listBills.buttons().container().appendTo('#buttonPaint');
