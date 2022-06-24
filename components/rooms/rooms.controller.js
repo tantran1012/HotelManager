@@ -1,14 +1,18 @@
 const Phong = require('../../models/Phong');
-
+const LoaiPhong = require('../../models/LoaiPhong');
 class RoomController {
     index(req, res, next) {
         Phong.find({})
             .then(rooms => {
-                rooms = rooms.map(rooms => rooms.toObject());
-                res.render('rooms/rooms', {
-                    title: "Phòng",
-                    rooms: rooms,
-                });
+                LoaiPhong.find({}).then(types => {
+                    types = types.map(types => types.toObject());
+                    rooms = rooms.map(rooms => rooms.toObject());
+                    res.render('rooms/rooms', {
+                        title: "Phòng",
+                        rooms: rooms,
+                        types: types
+                    });
+                })
             })
             .catch(next)
     };

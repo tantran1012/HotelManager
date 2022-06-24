@@ -32,7 +32,9 @@
 							<tbody>
 								{{#each rooms}}
 								<tr>
-									<td>{{this.ID}}</td>
+									<td>
+										{{this.ID}}
+									</td>
 									<td>
 										{{this.LoaiPhong}}
 									</td>
@@ -191,7 +193,7 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label>Loại phòng</label>
-						<label>Không xác định</label>
+						<label>Chưa xác định</label>
 					</div>
 					<div class="form-group">
 						<label>Đơn giá</label>
@@ -267,6 +269,8 @@
 	$('#detailRoom').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget);
 		var data = listRooms.row({ selected: true }).data();
+		var typeRoom = data[1];
+		
 		detailForm.action = '/rooms/?_method=GET';
 	});
 </script>
