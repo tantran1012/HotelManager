@@ -1,0 +1,175 @@
+<link rel="stylesheet" type="text/css" href="/js/DataTables/datatables.min.css" />
+<!-- Main content -->
+<section class="content" id="contentPage">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{title}}</h3>
+                        <h3 class="card-title float-right">Ngày tạo: {{time}}</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="mb-2" id="buttonPane">
+                            <button id="openModalDelete" type="button" class="btn btn-primary float-right ml-1"
+                                data-toggle="modal" data-target="#deleteStatistic" disabled>Xóa</button>
+                            <button id="openModalEdit" type="button" class="btn btn-primary float-right ml-1"
+                                data-toggle="modal" data-target="#editStatistic" disabled>Sửa</button>
+                            <button type="button" class="btn btn-primary float-right ml-1" data-toggle="modal"
+                                data-target="#addStatistic">Thêm</button>
+                        </div>
+                        <table id="listStatistics" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>ID phòng</th>
+                                    <th>thông tin hư hỏng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each damaged}}
+                                <tr>
+                                    <td>{{this.ID}}</td>
+                                    <td>{{this.IDPhong}}</td>
+                                    <td>{{this.ThongTinHuHong}}</td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="5" class="center">
+                                        Chưa có báo cáo nào.
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>ID phòng</th>
+                                    <th>thông tin hư hỏng</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+
+    <!-- Edit Statistic Modal -->
+    <div class="modal fade" id="editStatistic" tabindex="-1" role="dialog" aria-labelledby="editStatisticLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editStatisticLabel">Chỉnh sửa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" id="editStatisticForm">
+                    <div class="modal-body">
+                        <label>Thông tin hư hỏng</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-tools"></i></span>
+                            </div>
+                                <textarea class="form-control" id="editThongTinHuHong" name="ThongTinHuHong"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-success" id="editStatisticButton">Sửa</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /.edit Statistic Modal -->
+
+    <!-- Delete Form -->
+    <form method="POST" name="deleteStatisticForm"></form>
+    <!-- Delete Statistic Modal -->
+    <div class="modal fade" id="deleteStatistic" tabindex="-1" role="dialog" aria-labelledby="deleteStatisticLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteStatisticLabel">Xóa báo cáo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Bạn có thật sự muốn xóa
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="deleteStatisticButton">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.Delete Statistic Modal -->
+</section>
+
+<script type="text/javascript" src="/js/DataTables/datatables.min.js"></script>
+<script>
+    var delStatisticID;
+    var btnDeleteStatistic = document.getElementById('deleteStatisticButton');
+    var deleteForm = document.forms['deleteStatisticForm'];
+    var editForm = document.forms['editStatisticForm'];
+    var listStatistics;
+    const buttonOpenEdit = document.querySelector('#openModalEdit');
+    const buttonOpenDelete = document.querySelector('#openModalDelete');
+
+    $(document).ready(function () {
+        listStatistics = $('#listStatistics').DataTable({
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "buttons": [
+                'copy', 'excel', 'pdf', 'print'
+            ],
+            select: true,
+        })
+        listStatistics.button().container().appendTo('#buttonPane')
+
+        $('#listStatistics tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                buttonOpenEdit.disabled = true;
+                buttonOpenDelete.disabled = true;
+            } else {
+                buttonOpenEdit.disabled = false;
+                buttonOpenDelete.disabled = false;
+            }
+        });
+    });
+
+    $('#editStatistic').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var data = listStatistics.row({ selected: true }).data();
+        //editForm.action = '/statistics/' + data[0] + '?_method=PUT';
+        var modal = $(this);
+        console.log(data);
+        modal.find('.modal-body #editThongTinHuHong').text(data[2]);
+    })
+
+    $('#deleteStatistic').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var data = listStatistics.row({ selected: true }).data();
+        delStatisticID = data[0];
+    });
+
+    btnDeleteStatistic.onclick = function () {
+        //deleteForm.action = '/statistics/' + delStatisticID + '?_method=DELETE';
+        //deleteForm.submit();
+    }
+</script>
+<!-- /.content -->

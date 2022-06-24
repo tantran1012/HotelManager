@@ -8,4 +8,5 @@ router.delete('/:id', billController.delete)
 router.post('/save', billController.save);
 router.get('/', billController.index);
 
+router.get('/detail/:id',billController.detail);
 module.exports = router;

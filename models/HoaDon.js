@@ -7,7 +7,7 @@ const HoaDonSchema = new Schema({
     TenKhachHang: {type : Number },
     DiaChi: { type: String },
     TongTien: {type : Number },
-    DanhSachPhongThue: {type : String },
+    DanhSachPhieuThue: {type : String },
 });
 HoaDonSchema.plugin(AutoIncrement, {id:"HoaDon", inc_field: 'ID'});
 module.exports = mongoose.model('HoaDon', HoaDonSchema, 'HoaDon');

@@ -7,9 +7,7 @@ const BaoCaoSchema = new Schema({
     NgayTao: {type : Date },
     IDNguoiTao: { type: Number },
     LoaiBaoCao: {type : String },
-});
-
-
+}, {timestamps: true});
 
 BaoCaoSchema.plugin(AutoIncrement, {id: "BaoCao", inc_field: 'ID'});
 module.exports = mongoose.model('BaoCao', BaoCaoSchema, 'BaoCao');

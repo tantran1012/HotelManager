@@ -7,7 +7,7 @@ const DoanhThuLoaiPhongSchema = new Schema({
     IDBaoCao: {type : Number },
     LoaiPhong: { type: Number },
     DoanhThu: {type : Number },
-    TyLe: {type : Float64Array},
+    TyLe: {type : Number},
 });
 DoanhThuLoaiPhongSchema.plugin(AutoIncrement, {id: "DoanhThuLoaiPhong", inc_field: 'ID'});
 module.exports = mongoose.model('DoanhThuLoaiPhong', DoanhThuLoaiPhongSchema, 'DoanhThuLoaiPhong');
