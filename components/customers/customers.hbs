@@ -223,9 +223,12 @@
             "info": true,
             "autoWidth": false,
             "responsive": true,
-            dom: 'Bfrtip',
+            "buttons": [
+                'copy', 'excel', 'pdf', 'print'
+            ],
             select: true,
-        }).buttons().container().appendTo('#buttonPane');
+        })
+        listCustomers.button().container().appendTo('#buttonPane');
 
         $('#listCustomers tbody').on('click', 'tr', function () {
             if ($(this).hasClass('selected')) {
