@@ -6,49 +6,47 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-header">
-						<h3 class="card-title">Danh sách các hoá đơn</h3>
+						<h3 class="card-title">Danh sách các phiếu thuê</h3>
 					</div>
 					<!-- /.card-header -->
 					<div class="card-body">
 						<div class="mb-2" id="buttonPaint">
-							<button id="openModalDetail" type="button" class="btn btn-primary ml-2 mc-5 float-right"
-								data-toggle="modal" data-target="#detailBill" href="#" disabled>Chi Tiết</button>
 							<button id="openModalDelete" type="button" class="btn btn-primary ml-2 mc-5 float-right"
-								data-toggle="modal" data-target="#deleteBill" disabled>Xóa</button>
+								data-toggle="modal" data-target="#deleteRental" disabled>Xóa</button>
 							<button id="openModalEdit" type="button" class="btn btn-primary ml-2 mc-5 float-right"
-								data-toggle="modal" data-target="#editBill" disabled>Sửa</button>
+								data-toggle="modal" data-target="#editRental" disabled>Sửa</button>
 							<button type="button" class="btn btn-primary ml-2 mc-5 float-right" data-toggle="modal"
-								data-target="#addBill">Thêm</button>
+								data-target="#addRental">Thêm</button>
 						</div>
-						<table id="listBills" class="table table-bordered table-hover">
+						<table id="listRentals" class="table table-bordered table-hover">
 							<thead>
 								<tr>
 									<th>ID</th>
-									<th>Tên Khách Hàng</th>
-									<th>Địa chỉ</th>
-									<th>Tổng tiền</th>
-									<th>Danh Sách Phiếu Thuê</th>
+									<th>ID Phòng</th>
+									<th>Danh Sách Khách Hàng</th>
+									<th>Ngày Bắt Đầu</th>
+									<th>Ngày Trả Phòng</th>
 								</tr>
 							</thead>
 							<tbody>
-								{{#each bills}}
+								{{#each rentals}}
 								<tr>
 									<td>{{this.ID}}</td>
-									<td>{{this.TenKhachHang}}
+									<td>{{this.IDPhong}}
 									</td>
-									<td>{{this.DiaChi}}</td>
-									<td>{{this.TongTien}}</td>
-									<td>{{this.DanhSachPhieuThue}}</td>
+									<td>{{this.DanhSachKhachHang}}</td>
+									<td>{{this.NgayBatDauThue}}</td>
+									<td>{{this.NgayTraPhong}}</td>
 								</tr>
 								{{/each}}
 							</tbody>
 							<tfoot>
 								<tr>
 									<th>ID</th>
-									<th>Tên Khách Hàng</th>
-									<th>Địa chỉ</th>
-									<th>Tổng tiền</th>
-									<th>Danh Sách Phiếu Thuê</th>
+									<th>ID Phòng</th>
+									<th>Danh Sách Khách Hàng</th>
+									<th>Ngày Bắt Đầu</th>
+									<th>Ngày Trả Phòng</th>
 								</tr>
 							</tfoot>
 						</table>
@@ -63,122 +61,123 @@
 	</div>
 	<!-- /.container-fluid -->
 </section>
-<!-- Add Bill Modal -->
-<div class="modal fade" id="addBill" tabindex="-1" role="dialog" aria-labelledby="addBillLabel"
+<!-- Add Rental Modal -->
+<div class="modal fade" id="addRental" tabindex="-1" role="dialog" aria-labelledby="addRentalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="addBillLabel">Thêm khách hàng</h5>
+				<h5 class="modal-title" id="addRentalLabel">Thêm phiếu thuê</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form method="POST" action="/bills/save">
+			<form method="POST" action="/rentals/save">
 				<div class="modal-body">
-					<label>Tên khách hàng</label>
+					<label>Phòng</label>
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="Tên khách hàng" id="TenKhachHang"
-							name="TenKhachHang">
+						<input type="text" class="form-control" placeholder="Phong" id="Phong"
+							name="Phong">
 					</div>
-					<label>Địa chỉ</label>
+					<label>Danh sách khách hàng</label>
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-building"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="Địa chỉ" id="DiaChi" name="DiaChi">
+						<input type="text" class="form-control" placeholder="Danh sách khách hàng" 
+                        id="DanhSachKhachHang" name="DanhSachKhachHang">
 					</div>
-					<label>Tổng Tiền</label>
+					<label>Ngày Bắt Đầu Thuê</label>
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-building"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="Tổng Tiền" id="TongTien" name="TongTien">
+						<input type="text" class="form-control" placeholder="Ngày Bắt Đầu Thuê" id="NgayBatDauThue" name="NgayBatDauThue">
 					</div>
-					<label>Danh Sách Phiếu Thuê</label>
+					<label>Ngày Trả Phòng</label>
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-id-card"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="Danh Sách Phiếu Thuê" id="DanhSachPhieuThue" name="DanhSachPhieuThue">
+						<input type="text" class="form-control" placeholder="Ngày Trả Phòng" id="NgayTraPhong" name="NgayTraPhong">
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-					<button type="submit" class="btn btn-primary" id="addBillButton">Thêm mới</button>
+					<button type="submit" class="btn btn-primary" id="addRentalButton">Thêm mới</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
-<!-- /.add Bill Modal -->
+<!-- /.add Rental Modal -->
 
-<!-- Edit Bill Modal -->
-<div class="modal fade" id="editBill" tabindex="-1" role="dialog" aria-labelledby="editBillLabel"
+<!-- Edit Rental Modal -->
+<div class="modal fade" id="editRental" tabindex="-1" role="dialog" aria-labelledby="editRentalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="editBillLabel">Chỉnh sửa</h5>
+				<h5 class="modal-title" id="editRentalLabel">Chỉnh sửa</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form method="POST" id="editBillForm">
+			<form method="POST" id="editRentalForm">
 				<div class="modal-body">
-					<label>Tên Khách Hàng</label>
+					<label>Phòng</label>
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="Tên Khách Hàng" id="editTenKhachHang" name="TenKhachHang">
+						<input type="text" class="form-control" placeholder="Phòng" id="editPhong" name="Phong">
 					</div>
-					<label>Địa chỉ</label>
+					<label>Danh Sách Khách Hàng</label>
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-building"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="Địa chỉ" id="editDiaChi" name="DiaChi">
+						<input type="text" class="form-control" placeholder="Danh Sách Khách Hàng" id="editDanhSachKhachHang" name="DanhSachKhachHang">
 					</div>
 
-					<label>Tổng Tiền</label>
+					<label>Ngày Bắt Đầu Thuê</label>
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-building"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="Tổng Tiền" id="editTongTien" name="TongTien">
+						<input type="text" class="form-control" placeholder="Ngày Bắt Đầu Thuê" id="editNgayBatDauThue" name="NgayBatDauThue">
 					</div>
 
-					<label>Danh Sách Phiếu Thuê</label>
+					<label>Ngày Trả Phòng</label>
 					<div class="input-group mb-3">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-id-card"></i></span>
 						</div>
-						<input type="text" class="form-control" placeholder="Danh Sách Phiếu Thuê" id="editDanhSachPhieuThue" name="DanhSachPhieuThue">
+						<input type="text" class="form-control" placeholder="Ngày Trả Phòng" id="editNgayTraPhong" name="NgayTraPhong">
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-					<button type="submit" class="btn btn-success" id="editBillButton">Sửa</button>
+					<button type="submit" class="btn btn-success" id="editRentalButton">Sửa</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
-<!-- /.edit Bill Modal -->
+<!-- /.edit Rental Modal -->
 
 <!-- Delete Form -->
-<form method="POST" name="deleteBillForm"></form>
-<!-- Delete Bill Modal -->
-<div class="modal fade" id="deleteBill" tabindex="-1" role="dialog" aria-labelledby="deleteBillLabel"
+<form method="POST" name="deleteRentalForm"></form>
+<!-- Delete Rental Modal -->
+<div class="modal fade" id="deleteRental" tabindex="-1" role="dialog" aria-labelledby="deleteRentalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="deleteBillLabel">Xóa hoá đơn</h5>
+				<h5 class="modal-title" id="deleteRentalLabel">Xóa hoá đơn</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -188,30 +187,29 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger" id="deleteBillButton">Xóa</button>
+				<button type="button" class="btn btn-danger" id="deleteRentalButton">Xóa</button>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- /.Delete Bill Modal -->
+<!-- /.Delete Rental Modal -->
 
-<form method="GET" name="detailBillForm"></form>
+<form method="GET" name="detailRentalForm"></form>
 </section>
 
 <script type="text/javascript" src="/js/DataTables/datatables.min.js"></script>
 <script>
-	var delBillID;
-	var btnDeleteBill = document.getElementById('deleteBillButton');
-	var deleteForm = document.forms['deleteBillForm'];
-	var editForm = document.forms['editBillForm'];
-	var detailForm = document.forms['detailBillForm'];
-	var listBills;
+	var delRentalID;
+	var btnDeleteRental = document.getElementById('deleteRentalButton');
+	var deleteForm = document.forms['deleteRentalForm'];
+	var editForm = document.forms['editRentalForm'];
+	var detailForm = document.forms['detailRentalForm'];
+	var listRentals;
 	const buttonOpenEdit = document.querySelector('#openModalEdit');
 	const buttonOpenDelete = document.querySelector('#openModalDelete');
-	const buttonOpenDetail = document.querySelector('#openModalDetail');
 
 	$(document).ready(function () {
-		listBills = $('#listBills').DataTable({
+		listRentals = $('#listRentals').DataTable({
 			"ordering": true,
 			"info": true,
 			"autoWidth": false,
@@ -219,49 +217,39 @@
 			dom: 'Bfrtip',
 			select: true,
 		});
-		listBills.buttons().container().appendTo('#buttonPaint');
-		$('#listBills tbody').on('click', 'tr', function () {
+		listRentals.buttons().container().appendTo('#buttonPaint');
+		$('#listRentals tbody').on('click', 'tr', function () {
 			if ($(this).hasClass('selected')) {
 				buttonOpenEdit.disabled = true;
 				buttonOpenDelete.disabled = true;
-				buttonOpenDetail.disabled = true;
 			} else {
 				buttonOpenEdit.disabled = false;
 				buttonOpenDelete.disabled = false;
-				buttonOpenDetail.disabled = false;
 			}
 		});
 		
 	});
 	
-	$('#editBill').on('show.bs.modal', function (event) {
+	$('#editRental').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget);
-		var data = listBills.row({ selected: true }).data();
-		editForm.action = '/bills/' + data[0] + '?_method=PUT';
+		var data = listRentals.row({ selected: true }).data();
+		editForm.action = '/rentals/' + data[0] + '?_method=PUT';
 		var modal = $(this);
-		modal.find('.modal-body #editTenKhachHang').val(data[1]);
-		modal.find('input[id="editDiaChi"]').val(data[2]);
-		modal.find('input[id="editTongTien"]').val(data[3]);
-		modal.find('input[id="editDanhSachPhieuThue"]').val(data[4]);
+		modal.find('.modal-body #editPhong').val(data[1]);
+		modal.find('input[id="editDanhSachKhachHang"]').val(data[2]);
+		modal.find('input[id="editNgayBatDauThue"]').val(data[3]);
+		modal.find('input[id="editNgayTraPhong"]').val(data[4]);
 	})
 
-	$('#deleteBill').on('show.bs.modal', function (event) {
+	$('#deleteRental').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget);
-		var data = listBills.row({ selected: true }).data();
-		delBillID = data[0];
+		var data = listRentals.row({ selected: true }).data();
+		delRentalID = data[0];
 	});
 
-	btnDeleteBill.onclick = function () {
-		deleteForm.action = '/bills/' + delBillID + '?_method=DELETE';
+	btnDeleteRental.onclick = function () {
+		deleteForm.action = '/rentals/' + delRentalID + '?_method=DELETE';
 		deleteForm.submit();
-	}
-	btnDetailBill = document.getElementById("openModalDetail");
-	btnDetailBill.onclick = function() {
-		var data = listBills.row({ selected: true }).data();
-		console.log("Hello world");
-		detailBillID = data[0];
-		detailForm.action = '/bills/detail/' + detailBillID + '?_method=GET';
-		detailForm.submit();
 	}
 </script>
 <!-- /.content -->
